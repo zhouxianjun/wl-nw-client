@@ -1,0 +1,6 @@
+{
+    "isDev": false,
+    "server": {
+        "port": 8888
+    }
+}
