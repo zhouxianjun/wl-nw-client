@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+	<link rel="stylesheet" href="css/comm.css" />
+	<!-- <script type="text/javascript" src="http://simplewebrtc.com/latest.js"></script> -->
+	<script src="js/api.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/rtc.js"></script>
+	<style type="text/css">
+		.header{
+			width: 100%;
+			height: 100%;
+		}
+		.top {
+			height: 30px;
+			margin-top: 0px;
+			-webkit-border-radius: 5px 5px 0 0;
+			border-top: 1px solid #9BA3AE;
+			background: url("images/bg3.png") repeat-x;
+		}
+		.head{
+			color: #393836;
+			margin: 5px 0 0 8px;
+			font-weight: bold;
+			font-size: 13px;
+			float: left;
+		}
+		.footbar{
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			overflow: hidden;
+			zoom: 1;
+			background: #e0eff6;
+			border-top: 1px solid #cde5f1;
+			border-bottom-right-radius: 5px 5px;
+			border-bottom-left-radius: 5px 5px;
+		}
+		.btn{
+			float: right;
+			margin: 5px 5px 4px 0;
+			line-height: 20px;
+			width: 69px;
+			height: 22px;
+			background: url('images/sprite.png') 0 -702px no-repeat;
+			overflow: hidden;
+			text-align: center;
+			display: block;
+			-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+			color: #000;
+		}
+		.btn:hover{
+			background-position: 0 -660px;
+		}
+	</style>
+	<script type="text/javascript">
+		var webrtc = new SimpleWebRTC({
+		    // the id/element dom element that will hold "our" video
+		    localVideoEl: 'localVideo',
+		    // the id/element dom element that will hold remote videos
+		    remoteVideosEl: 'remotesVideos',
+		    // immediately ask for camera access
+		    autoRequestMedia: true,
+		    debug: false,
+		    url: rtcServer
+		});
+		$(function(){
+			var chatid = getQueryString('chatid') || 'test';
+			var winid = getQueryString('winid');
+			var chats = getLocalStorage('chats');
+			win.on('closed', function(){
+				var rtcs = getLocalStorage('rtcs') || {};
+				delete rtcs[chatid];
+				setLocalStorage('rtcs', rtcs);
+				
+				if(chats && chats[winid]){
+					chats[winid].window.insertSystemMsg({
+						time: moment().format('YYYY-MM-DD HH:mm:ss'),
+						msg: '视频会话已结束',
+					});
+					chats[winid].window.waitRTC = false;
+				}
+			});
+			
+			webrtc.on('readyToCall', function () {
+			    // you can name it anything
+			    webrtc.joinRoom(chatid, function(err, desc){
+			    	if(!err){
+			    		console.log(desc);
+			    	}else{
+			    		console.log(err);
+			    	}
+			    });
+			});
+			webrtc.on('remove', function(data){
+				console.log(data);
+				console.log(webrtc);
+				setTimeout(function(){
+					if(!webrtc.webrtc.peers.length){
+						win.close();
+					}
+				}, 200);
+			});
+		});
+	</script>
+</head>
+<body style="margin: 0;padding: 0;overflow: hidden;">
+	<div class="header">
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<div class="head">
+				视频会话
+			</div>
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+		</div>
+	</div>
+	<video style="z-index: 9999;right: 0;top: 30px; position: absolute;" height="120" id="localVideo"></video>
+    <div style="position: absolute;left: 0;top: 30px;" id="remotesVideos"></div>
+</body>
+</html>

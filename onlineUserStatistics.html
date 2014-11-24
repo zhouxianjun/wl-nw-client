@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<link rel="stylesheet" media="all"
+	href="css/jquery-jvectormap-1.2.2.css" />
+<link rel="stylesheet" media="all"
+	href="css/clockNumber.css" />
+<link rel="stylesheet" href="css/comm.css" />
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/notifier-base.css" />
+<link rel="stylesheet" href="css/notifier-theme-clean.css" />
+<link rel="stylesheet" href="css/notifier-theme-plastic.css" />
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="maps/china-map2.js"></script>
+<script src="maps/world-map.js"></script>
+<script type="text/javascript" src="js/underscore-1.3.3.min.js"></script>
+<script type="text/javascript" src="js/backbone-0.9.2.js"></script>
+<script type="text/javascript" src="js/backbone.notifier.js"></script>
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript">
+	if(navite){
+		navite.setSize(650, 500);
+		win.setMinimumSize(650, 500);
+		navite.listenClose(function(){
+			setLocalStorage('onlineWindow',false);
+		});
+	}
+	var areatype = 'world_mill_en';
+	var upareatype = 'world_mill_en';
+	var type = 0;
+	var dom = null;
+	var data = {};
+	var map = null;
+	var code;
+	function initMap(){
+		createDom();
+		createMap(areatype);
+		dom.height(window.innerHeight - 100);
+		for (var e in map.regions) map.regions[e].element.setStyle("fill", 'white');
+		map.series.regions[0].setValues(data);
+		map.setSize();
+	}
+	function remoteLoad(val){
+		val = val || code;
+		ajax({
+			url: baseUrl + '/wl/main/onlines.do',
+			data: {
+				type: type,
+				value: val
+			},
+			success: function(res){
+				code = val;
+				var online = res.data.data;
+				var numbers = createClockNumber(online.count || 0);
+				$('#onlineNumbers').append(numbers);
+				data = online;
+				initMap();
+			}
+		});
+	}
+	function createDom(){
+		if(dom)
+			dom.remove();
+		dom = $('<div><div>');
+		dom.attr('id','regionalUser');
+		dom.css({
+			'width': '100%', 
+			'height': window.innerHeight - 100, 
+			'position': 'relative', 
+			'overflow': 'hidden', 
+			'background-color': 'transparent'
+		});
+		$('#main').append(dom);
+	}
+	function createMap(m){
+		if(map){
+			map.remove();
+		}
+		map = new jvm.WorldMap({
+			container: dom,
+			map: m,
+			series : {
+				regions : [{
+					values : data,
+					scale: ['#C8EEFF', '#0071A4']
+				}]
+			},
+			onRegionLabelShow: function(e,lable,code){
+				var name = map.regions[code].config.name;
+				var num = data[code];
+				$(lable).html(name + '<br>在线人数:' + (num ? num : 0));
+			},
+			onRegionClick: function(e, code){
+				var area = code.toLowerCase() + '_mill';
+				if(jvm.WorldMap.maps[area]){
+					type++;
+					areatype = area;	
+					remoteLoad(code);
+				}
+			}
+		});
+	}
+	function createClockNumber(num){
+		$('.clocklight').remove();
+		var dom = $('<div class="clocklight"><div class="digits"></div></div>');
+		var digit_to_name = 'zero one two three four five six seven eight nine'.split(' ');
+		var numbers = [];
+		if(typeof num === 'object'){
+			numbers = num;
+		}else{
+			num = num + '';
+			numbers = num.split('');
+		}
+		var digit_holder = dom.find('.digits');
+	    $.each(numbers, function(index, val){
+	        var pos = $('<div>');
+	        for(var i=1; i<8; i++){
+	            pos.append('<span class="d' + i + '">');
+	        }
+	        pos.attr('class', digit_to_name[val]);
+	        digit_holder.append(pos);
+	    });
+	    return dom;
+	}
+	$(function(){
+		$(document).keyup(function(event){
+			if(event.which == 8 && upareatype && upareatype != areatype){
+				areatype = upareatype;
+				type--;
+				if(type < 0)
+					type = 0;
+				if(type == 1){
+					remoteLoad(areatype.substr(0, areatype.indexOf('_')).toUpperCase());
+				}else{
+					remoteLoad();
+				}
+			}
+		});
+		remoteLoad();
+		window.onresize = function(){
+			initMap();
+		}
+	});
+	
+	function showdata(){
+		var cn1 = jvm.WorldMap.maps.cn_mill_zh.paths;
+		var cn2 = jvm.WorldMap.maps.china_zh.paths;
+		for(var key in cn1){
+			for(var key2 in cn2){
+				if(cn1[key].name == cn2[key2].name){
+					console.log('"'+key+'": {"path" : "'+cn2[key2].path+'","name": "'+cn1[key].name+'"},');
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body style="padding: 0px;margin: 0px;-webkit-user-select: none;">
+<div class="window_bg_container"> </div>
+<div style="position: absolute;right: 100px;width: 100%;height: 20px;-webkit-app-region: drag;-webkit-user-select: none;"></div>
+<div class="window_titleButtonBar">
+	<a class="ui_button window_action_button window_close" title="关闭" hidefocus="" href="javascript:navite.closeWin();" style="display: block;"></a>
+	<a class="window_action_button window_min" title="最小化" hidefocus="" href="javascript:navite.minimize();" style="display: block;"></a>
+</div>
+<div id="main" style="min-width: 600px;">
+	<div style="width: 100%;height: 70px;background-color: rgb(80, 80, 80);padding-top: 30px;">
+		<img src="images/wl64.png" width="60px" height="60px" style="float: left;margin-left: 50px;">
+		<div style="float: left;margin: 0 10px;line-height: 30px;color: white;font-weight: bold;font-size: 20px;">
+			<span>微聊</span><br>
+			<span>同时在线人数</span>
+		</div>
+		<div id="onlineNumbers"></div>
+	</div>
+</div>
+</body>
+</html>

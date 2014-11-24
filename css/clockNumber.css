@@ -1,0 +1,168 @@
+.clocklight{
+	background-color:#f3f3f3;
+	color:#272e38;
+}
+.clocklight .digits div span{
+	background-color:#272e38;
+	border-color:#272e38;	
+}
+/*-------------------------
+	The Digits
+--------------------------*/
+
+
+.clocklight .digits div{
+	text-align:left;
+	position:relative;
+	width: 28px;
+	/*height:50px;*/
+	display:inline-block;
+	margin:0 4px;
+}
+
+.clocklight .digits div span{
+	opacity:0;
+	position:absolute;
+
+	-webkit-transition:0.25s;
+	-moz-transition:0.25s;
+	transition:0.25s;
+}
+
+.clocklight .digits div span:before,
+.clocklight .digits div span:after{
+	content:'';
+	position:absolute;
+	width:0;
+	height:0;
+	border:5px solid transparent;
+}
+
+.clocklight .digits .d1{			height:5px;width:16px;top:0;left:6px;}
+.clocklight .digits .d1:before{	border-width:0 5px 5px 0;border-right-color:inherit;left:-5px;}
+.clocklight .digits .d1:after{	border-width:0 0 5px 5px;border-left-color:inherit;right:-5px;}
+
+.clocklight .digits .d2{			height:5px;width:16px;top:24px;left:6px;}
+.clocklight .digits .d2:before{	border-width:3px 4px 2px;border-right-color:inherit;left:-8px;}
+.clocklight .digits .d2:after{	border-width:3px 4px 2px;border-left-color:inherit;right:-8px;}
+
+.clocklight .digits .d3{			height:5px;width:16px;top:48px;left:6px;}
+.clocklight .digits .d3:before{	border-width:5px 5px 0 0;border-right-color:inherit;left:-5px;}
+.clocklight .digits .d3:after{	border-width:5px 0 0 5px;border-left-color:inherit;right:-5px;}
+
+.clocklight .digits .d4{			width:5px;height:14px;top:7px;left:0;}
+.clocklight .digits .d4:before{	border-width:0 5px 5px 0;border-bottom-color:inherit;top:-5px;}
+.clocklight .digits .d4:after{	border-width:0 0 5px 5px;border-left-color:inherit;bottom:-5px;}
+
+.clocklight .digits .d5{			width:5px;height:14px;top:7px;right:0;}
+.clocklight .digits .d5:before{	border-width:0 0 5px 5px;border-bottom-color:inherit;top:-5px;}
+.clocklight .digits .d5:after{	border-width:5px 0 0 5px;border-top-color:inherit;bottom:-5px;}
+
+.clocklight .digits .d6{			width:5px;height:14px;top:32px;left:0;}
+.clocklight .digits .d6:before{	border-width:0 5px 5px 0;border-bottom-color:inherit;top:-5px;}
+.clocklight .digits .d6:after{	border-width:0 0 5px 5px;border-left-color:inherit;bottom:-5px;}
+
+.clocklight .digits .d7{			width:5px;height:14px;top:32px;right:0;}
+.clocklight .digits .d7:before{	border-width:0 0 5px 5px;border-bottom-color:inherit;top:-5px;}
+.clocklight .digits .d7:after{	border-width:5px 0 0 5px;border-top-color:inherit;bottom:-5px;}
+
+
+/* 1 */
+
+.clocklight .digits div.one .d5,
+.clocklight .digits div.one .d7{
+	opacity:1;
+}
+
+/* 2 */
+
+.clocklight .digits div.two .d1,
+.clocklight .digits div.two .d5,
+.clocklight .digits div.two .d2,
+.clocklight .digits div.two .d6,
+.clocklight .digits div.two .d3{
+	opacity:1;
+}
+
+/* 3 */
+
+.clocklight .digits div.three .d1,
+.clocklight .digits div.three .d5,
+.clocklight .digits div.three .d2,
+.clocklight .digits div.three .d7,
+.clocklight .digits div.three .d3{
+	opacity:1;
+}
+
+/* 4 */
+
+.clocklight .digits div.four .d5,
+.clocklight .digits div.four .d2,
+.clocklight .digits div.four .d4,
+.clocklight .digits div.four .d7{
+	opacity:1;
+}
+
+/* 5 */
+
+.clocklight .digits div.five .d1,
+.clocklight .digits div.five .d2,
+.clocklight .digits div.five .d4,
+.clocklight .digits div.five .d3,
+.clocklight .digits div.five .d7{
+	opacity:1;
+}
+
+/* 6 */
+
+.clocklight .digits div.six .d1,
+.clocklight .digits div.six .d2,
+.clocklight .digits div.six .d4,
+.clocklight .digits div.six .d3,
+.clocklight .digits div.six .d6,
+.clocklight .digits div.six .d7{
+	opacity:1;
+}
+
+
+/* 7 */
+
+.clocklight .digits div.seven .d1,
+.clocklight .digits div.seven .d5,
+.clocklight .digits div.seven .d7{
+	opacity:1;
+}
+
+/* 8 */
+
+.clocklight .digits div.eight .d1,
+.clocklight .digits div.eight .d2,
+.clocklight .digits div.eight .d3,
+.clocklight .digits div.eight .d4,
+.clocklight .digits div.eight .d5,
+.clocklight .digits div.eight .d6,
+.clocklight .digits div.eight .d7{
+	opacity:1;
+}
+
+/* 9 */
+
+.clocklight .digits div.nine .d1,
+.clocklight .digits div.nine .d2,
+.clocklight .digits div.nine .d3,
+.clocklight .digits div.nine .d4,
+.clocklight .digits div.nine .d5,
+.clocklight .digits div.nine .d7{
+	opacity:1;
+}
+
+/* 0 */
+
+.clocklight .digits div.zero .d1,
+.clocklight .digits div.zero .d3,
+.clocklight .digits div.zero .d4,
+.clocklight .digits div.zero .d5,
+.clocklight .digits div.zero .d6,
+.clocklight .digits div.zero .d7{
+	opacity:1;
+}

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+	<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+	<link rel="stylesheet" href="css/jquery.contextMenu.css" />
+	<link rel="stylesheet" href="css/comm.css" />
+	<link rel="stylesheet" href="css/notifier-base.css" />
+	<link rel="stylesheet" href="css/notifier-theme-clean.css" />
+	<link rel="stylesheet" href="css/notifier-theme-plastic.css" />
+	<script type="text/javascript" src="js/api.js"></script>
+	<!-- <script src="http://localhost:4567/socket.io/socket.io.js"></script> -->
+	<script src="js/socket.io.js"></script>
+	<script type="text/javascript" src="js/socket.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script src="js/jquery.mobile-1.3.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.contextMenu.js"></script>
+	<script type="text/javascript" src="js/jquery.jrumble.1.3.min.js"></script>
+	<script type="text/javascript" src="js/moment.min.js"></script>
+	<script type="text/javascript" src="js/underscore-1.3.3.min.js"></script>
+	<script type="text/javascript" src="js/backbone-0.9.2.js"></script>
+	<script type="text/javascript" src="js/backbone.notifier.js"></script>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script type="text/javascript" src="js/fileHttpServer.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/wrapper.js"></script>
+	<script type="text/javascript" src="js/loading.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<title>微聊</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			background: #4E5359 url(images/bg_universal17ced3.png) repeat 0 0;
+		}
+		.top{
+			height: 69px;
+			margin-top: 0px;
+			-webkit-border-radius: 5px 5px 0 0;
+			border-top: 1px solid #9BA3AE;
+			border-bottom: 1px solid #333;
+			background-color: #5B6774;
+			background: -webkit-gradient(linear, left top,left bottom, from(#6B7888),to(#545E6A), color-stop(0.1,#6A7786),color-stop(0.5,#5E6977),color-stop(0.9,#56616D),color-stop(1.0,#545E6A));
+		}
+		.myFace{
+			position: absolute;
+			top: 4px;
+			left: 9px;
+			width: 58px;
+			height: 60px;
+			background: url("../images/avatar_default17ced3.png") no-repeat center;
+			-webkit-border-radius: 50%;
+			border: 2px solid white;
+		}
+		.chatListSearch{
+			height: 71px;
+			margin: 0px;
+			background-color: #E7EBEE;
+			background: -webkit-gradient(linear, left top,left bottom, from(#EEF2F5),to(#D2D5D9), color-stop(0.1,#EEF2F5),color-stop(0.3,#EEF1F4),color-stop(0.5,#E7EBEE),color-stop(0.7,#E1E4E8),color-stop(0.9,#D4D8DC),color-stop(1.0,#D2D5D9));
+			border-top: 1px solid #FFF;
+			border-bottom: 1px solid #ABB0B4;
+		}
+		.chatListSearchPanel{
+			padding: 0px 10px 0px;
+			margin: 0px;
+		}
+		.listOperatorContent {
+			height: 27px;
+			border-radius: 0 0 5px 5px;
+			margin-top: 2px;
+			margin-bottom: 4px;
+		}
+		.addr{
+			float: left;
+			width: 49%;
+			text-align: center;
+			margin-top: 8px;
+		}
+		.bag{
+			background: url("images/button0217ced3.png") no-repeat;
+			width: 25px;
+			height: 22px;
+			margin-left: 45%;
+			cursor: pointer;
+		}
+		.cutOffRule{
+			height: 15px;
+			width: 0px;
+			float: left;
+			margin-top: 11px;
+			border-left: 1px dotted #7E7E7E;
+			border-right: 1px dotted #FFF;
+		}
+		.chatListSearchInput{
+			background-color: #fff;
+			border: 1px solid #989CA1;
+			height: 20px;
+			width: 100%;
+			margin-top: 10px;
+			-webkit-border-radius: 15px;
+			box-shadow: 0px 1px 0px #FFF;
+		}
+		.chatListSearchIcon{
+			display: block;
+			height: 93%;
+			width: 28px;
+			background: url("images/icon_chat17ced3.png") no-repeat -36px -166px;
+			float: left;
+		}
+		.searchClean{
+			width: 21px;
+			height: 23px;
+			background: url("images/button_chat1832d7.png") no-repeat -4px -432px;
+			cursor: pointer;
+			float: right;
+			margin-right: 2px;
+			display: none;
+		}
+		.head{
+			position: absolute;
+			left: 72px;
+			height: 51px;
+			padding: 10px;
+			width: 50%;
+		}
+		.nickName{
+			font: bold 16px/100% "微软雅黑";
+			color: #fff;
+			height: 25px;
+			margin: 10px;
+		}
+		.signature{
+			font-size: 12px;
+			color: white;
+			height: 15px;
+			width: 100%;
+			margin-left: 10px;
+			position: absolute;
+			top: 45px;
+		}
+		
+		.signature:hover {
+			border: 1px solid #b3b3b3;
+			-webkit-border-radius: 3px;
+			padding: 1px;
+			background: url('images/hover.png') repeat-x;
+		}
+		
+		#wrapper {
+			position:absolute;
+			top:145px; bottom:27px; left:0;
+			width:100%;
+			overflow:auto;
+		}
+		
+		#friends_wrapper{
+			position:absolute;
+			top:145px; bottom:27px; left:0;
+			width:100%;
+			overflow:auto;
+			display: none;
+		}
+		
+		.friends_is_online{
+			float: right;
+			font-size: 12px;
+			color: gray;
+		}
+		
+		.friends_list{
+			padding: 8px 20px 10px;
+			border-top: 1px solid #F7F7F7;
+			border-bottom: 1px solid #D5D6D7;
+			text-shadow: 0 1px 0 white;
+			cursor: pointer;
+			height: 45px;
+			background-color: #F5F5F5;
+		}
+		.friendGroupEditInpt{
+			position: absolute;
+			display: none;
+			border-radius: 3px;
+			border: 1px solid grey;
+			padding: 2px;
+			width: 60%;
+		}
+		.footbar{
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			overflow: hidden;
+			zoom: 1;
+			background: #e0eff6;
+			border-top: 1px solid #cde5f1;
+			border-bottom-right-radius: 5px 5px;
+			border-bottom-left-radius: 5px 5px;
+		}
+		.searchBuddy {
+			color: #333;
+			display: inline;
+			float: left;
+			margin: 6px 4px 4px;
+			text-indent: 4px;
+			height: 15px;
+			line-height: 15px;
+			overflow: hidden;
+			cursor: pointer;
+			background-color: #eeeee;
+			-webkit-tap-highlight-color: rgba(6,6,6,0.3);
+		}
+		.searchBuddy div {
+			background-color: red;
+			display: inline;
+			float: left;
+			width: 16px;
+			height: 16px;
+			overflow: hidden;
+			background: url('images/eqq_sprite_png.png') no-repeat -2px -82px;
+		}
+		.message_manage_icon {
+			height: 16px;
+			line-height: 16px;
+			float: left;
+			display: inline;
+			margin: 5px;
+			text-indent: 4px;
+			color: #333;
+			cursor: pointer;
+			-webkit-tap-highlight-color: rgba(6,6,6,0.3);
+		}
+		.message_manage_icon_div {
+			display: inline;
+			float: left;
+			width: 16px;
+			height: 16px;
+			overflow: hidden;
+			zoom: 1;
+			background: url('images/eqq_sprite_png.png') no-repeat -162px -82px;
+		}
+	</style>
+</head>
+<body>
+	<div class="weixin_main">
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<img title="点击修改资料" onclick="editInfo();" class="myFace" style="-webkit-filter:grayscale();cursor: pointer;" id="my_face" src="">
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+			<div class="head">
+				<div class="nickName ellipsis" style="width: 100%" id="my_nickName"></div>
+				<div class="signature" id="my_signature"></div>
+				<input id="signatureInput" data-role="none" style="padding: 2px;border: none;-webkit-border-radius: 5px;position: absolute;top: 41px;left: 16px;display: none;width: 100%;"/>
+			</div>
+		</div>
+		<div class="chatListSearch">
+			<div class="chatListSearchPanel">
+				<div class="listOperatorContent">
+					<div class="addr">
+						<div class="bag" onclick="addrChange(1)" style="background-position: -1px -69px;"></div>
+					</div>
+					<div style="float: left" class="cutOffRule"></div>
+					<div class="addr">
+						<div class="bag" onclick="addrChange(2)" style="background-position: -56px -69px;"></div>
+					</div>
+				</div>
+				<div class="chatListSearchInput">
+					<span class="chatListSearchIcon"></span>
+					<input id="main_search" data-role="none" type="text" value="" placeholder="搜索" style="border: none;width: 78%;">
+					<span class="searchClean" id="main_searchClean"></span>
+				</div>
+			</div>
+		</div>
+		<div id="wrapper">
+			<div class="scroller">
+				<div id="pullDown" class="pullDown">
+					<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+				</div>
+				
+				<ul id="list">
+					<!-- <p>
+						<img alt="" src="" width="44px" height="44px;" style="float: left;">
+						<span style="float: right;color: #47778D;font-size: 12px;">ssss</span>
+						<span style="margin-left: 8px;color: #343434;" class="ellipsis">腾讯新闻</span><br>
+						<span style="margin-left: 52px; color: #B6B6B6;max-width: 240px;display: block;" class="ellipsis">腾讯新闻腾讯新闻腾讯新闻腾讯新闻腾讯新闻腾讯新闻</span>
+					</p> -->
+				</ul>
+			</div>
+		</div>
+		<div id="friends_wrapper">
+			<div class="scroller">
+				<div id="friends_pullDown" class="pullDown">
+					<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+				</div>
+				<ul id="friends">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footbar">
+		<a href="javascript:openFind();" data-role="none" class="searchBuddy" title="查找">
+			<div></div>查找
+		</a>
+		<a href="javascript:openMsgBox();" data-role="none" class="message_manage_icon" title="消息盒子">
+			<div class="message_manage_icon_div"></div>消息盒子
+		</a>
+		<a href="javascript:openOnline();" data-role="none" class="message_manage_icon" title="实时在线">
+			<div class=""></div>实时在线
+		</a>
+	</div>
+	<input data-role="none" class="friendGroupEditInpt"/>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="css/comm.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/addFriend.js"></script>
+<style type="text/css">
+	body{
+		font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+		margin: 0;
+		padding: 0;
+		color: #333;
+	}
+	.header{
+		width: 100%;
+		height: 100%;
+	}
+	.top {
+		height: 35px;
+		margin-top: 0px;
+	}
+	.head{
+		color: #393836;
+		margin: 5px 0 0 8px;
+		font-weight: bold;
+		font-size: 13px;
+		float: left;
+	}
+	.footbar{
+		position: absolute;
+		left: 2px;
+		bottom: 2px;
+		width: 99%;
+		overflow: hidden;
+		zoom: 1;
+		background: #e0eff6;
+		border-top: 1px solid #cde5f1;
+		border-bottom-right-radius: 5px 5px;
+		border-bottom-left-radius: 5px 5px;
+	}
+	.btn{
+		float: right;
+		margin: 5px 5px 4px 0;
+		line-height: 20px;
+		width: 69px;
+		height: 22px;
+		background: url('images/sprite.png') 0 -702px no-repeat;
+		overflow: hidden;
+		text-align: center;
+		display: block;
+		-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+		color: #000;
+	}
+	.btn:hover{
+		background-position: 0 -660px;
+	}
+	.info{
+		float: left;
+		margin: 0 40px 0 10px;
+	}
+	.msg{
+		height: 200px;
+		background-color: white;
+	}
+	.ext{
+		color: gray;
+		margin-top: 10px;
+	}
+	.window_bg_container {
+		background: #fff url('images/bg3.png') repeat-x;
+		border: 1px solid #3e7186;
+		-moz-border-radius: 5px;
+		-khtml-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: -1;
+		width: 99.3%;
+		height: 99.3%;
+		padding: 0;
+		margin: 0;
+	}
+</style>
+</head>
+<body style="background-color: white;">
+	<div class="header">
+		<div class="window_bg_container"></div>
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<div class="head">
+				添加好友
+			</div>
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+		</div>
+	</div>
+	<div style="margin-left: 30px;">
+		<div>您将添加以下好友</div>
+		<div>
+			<img id="face" onerror="faceNofind();" src="" style="float: left; width: 40px;height: 40px;margin: 0 8px 8px 0"/>
+			<div id="nickName" style="font-weight: bold;color: #333;margin-top: 8px;margin-bottom: 10px;">昵称</div>
+			<div style="color: #666">请输入验证信息:</div>
+			<textarea id="msg" style="height: 35px;width: 220px;"></textarea>
+			<div style="margin-left: 8px;">
+				分组：
+				<select id="group" style="width: 225px;">
+					
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="footbar">
+		<a href="javascript:navite.closeWin();" data-role="none" class="btn" title="忽略">取消</a>
+		<a href="javascript:addFriend();" data-role="none" class="btn" title="确定">确定</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+body { font-size:12px; margin:0px; padding:0px; }
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td { margin:0; padding:0 }
+a { text-decoration: none; }
+.window { display:block; left:-999999px; top:-999999px; padding:0; overflow:hidden; -webkit-tap-highlight-color:rgba(0, 0, 0, 0); -webkit-touch-callout:none }
+.window_inner { position:relative; width:100%; height:100% }
+.window_content { margin:0; height:100%; overflow:hidden; position:relative; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0; -o-border-radius:5px 5px 0 0; border-radius:5px 5px 0 0; border:1px solid #999 }
+.window_bg_container { position:absolute; left:0; top:0; z-index:-1; width:100%; height:100%; border:0; padding:0; margin:0 }
+.userDetails_MainInfo { padding:5px 0 0 0; height:70px }
+.userDetails_avatar { float:left; display:inline; margin:0 9px; width:40px; height:40px; padding:1px; border:1px solid #ddd; background:white }
+.userDetails_nameArea { margin:0 0 0 5px; height:22px; line-height:22px; overflow:hidden }
+.userDetails_qquin { float:left; margin:0 5px; color:black; }
+.userDetails_name { float:left; display:inline }
+.userDetails_qqLevel div { float:left; display:inline; margin:3px 0 0 1px; width:16px; height:16px }
+.userDetails_signatureArea { margin:0 5px; width:470px; line-height:22px; color:#666; overflow:hidden }
+.userDetails_tabHeadArea { padding:5px 0 0 0; height:22px; line-height:22px; width:100% }
+.userDetails_tabHeadArea div { float:left; display:inline; margin:1px 1px 0 6px; width:80px; height:22px; line-height:22px; cursor:pointer; text-align:center }
+.userDetails_tabHeadArea div.current { margin:0 0 0 10px; border-width:1px 1px 0 1px; border-style:solid; border-color:#a1b4b0; background:white; position:relative }
+html.ie6_0 .userDetails_tabHeadArea div.current { margin-left:5px }
+.userDetails_tabBodyArea { border-width:1px 0 0 0; border-style:solid; border-color:#a1b4b0 }
+dl.userDetails_basicList dt { float:left; display:inline; margin:0; padding:0 0 0 3px; width:58px; height:26px; line-height:26px; color:#666; overflow:hidden }
+dl.userDetails_basicList dd { float:left; display:inline; margin:0; padding:0 1px; width:190px; height:26px; line-height:26px; overflow:hidden }
+dl.userDetails_basicList dd.userDetails_small { width:62px }
+dl.userDetails_basicList dd select { padding:1px 1px 1px 0; width:62px; height:19px }
+dl.userDetails_basicList dd input { padding:1px 0 0 0; width:186px; height:16px; line-height:16px }
+dl.userDetails_basicList dd.userDetails_superbig { width:440px; height:80px; overflow-y:auto }
+dl.userDetails_basicList dd.userDetails_small input { width:45px }
+dl.userDetails_basicList dd.userDetails_big input { width:398px }
+dl.userDetails_basicList dd.userDetails_superbig textarea { width:439px; height:76px }
+.qqLevel_sun { background:url('../images/portal_all_png.png') no-repeat -22px -82px }
+.ie6_0 .qqLevel_sun, .ie7_0 .qqLevel_sun { background:url('./images/portal_all_gif.gif') no-repeat -22px -82px }
+.qqLevel_moon { background:url('../images/portal_all_png.png') no-repeat -42px -82px }
+.qqLevel_star { background:url('../images/portal_all_png.png') no-repeat -62px -82px }
+.window_bg_container { background:#f5fafc url('../images/bg3.png') repeat-x; border:1px solid #3e7186; -moz-border-radius:5px; -khtml-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; -webkit-box-shadow:1px 1px 4px #333 }
+.window_titleBar, .eqq_window .window_titleBar { margin:5px; background:transparent }
+.window_content { margin:1px; border:0; border-radius:0; box-shadow:none; position:static }
+.window_close { background:url(../images/sprite.png) 0 -784px!important; height:20px; float:right; width:39px; margin:0 }
+.window_close:hover { background-position:0 -744px!important }
+.window_close:hover { background:url(../images/sprite.gif) 0 -744px }
+.window_titleButtonBar { position:absolute; right:2px; top:-1px }
+.window_title { line-height:15px; text-align:left }
+.ui_messageBox { background:transparent }
+.chatBox_msgList a { color:#45649e }
+.userDetails_area { background:0 }
+.window_button { line-height: 20px; width: 69px; height: 22px; background: url('../images/sprite.png') 0 -702px no-repeat; margin: 0 10px 0 0; }
+a.window_button { display: none; float: right; margin-left: 10px; height: 23px; width: 69px; cursor: pointer; color: #333; text-align: center; line-height: 23px; }
+dl.userDetails_basicList dd input, dl.userDetails_basicList dd select, dl.userDetails_basicList dd textarea { float: left; margin: 2px 0 0 0; border-color: #999 #CCCCCc #ccc #999999; border-style: solid; border-width: 1px; line-height: 16px; overflow: auto; }
+dl.userDetails_basicList dd input.userDetails_birthyear { width:59px }
+dl.userDetails_basicList dd input.userDetails_birthmonth { width:59px }
+dl.userDetails_basicList dd input.userDetails_birthday { width:59px }
+.userDetails_text { float:left; padding:0 3px }
+.myDetails_basicList { padding-left:20px; margin-top:10px; }
+.myDetails_basicList .userDetails_basicList dt { color:#000; height:18px; line-height:18px; padding:0 }
+.myDetails_basicList .userDetails_basicList dd { margin-bottom:0; height:24px; line-height:18px; padding:0 }
+.myDetails_basicList .dItem_s { width:130px; float:left; padding:0 }
+.myDetails_basicList .dItem_s_r { width:130px; float:right; padding:0 }
+.myDetails_basicList .dItem_s select, .myDetails_basicList .dItem_s_r select { width:113px; overflow:hidden; margin:0; border:1px #728ea4 solid }
+.myDetails_basicList .dItem_s input, .myDetails_basicList .dItem_s_r input { width:110px; overflow:hidden; margin:0; border:1px #728ea4 solid }
+.myDetails_basicList .dItem_l { width:280px; float:left; padding:0 }
+.myDetails_basicList .dItem_l_r { width:260px; float:right; padding:0 }
+.myDetails_basicList .dItem_l input, .myDetails_basicList .dItem_l_r input { width:240px; overflow:hidden; margin:0; border:1px #728ea4 solid }
+dl.userDetails_basicList dd.userDetails_superbig_my { width:510px; height:45px }
+dl.userDetails_basicList dd.userDetails_superbig_my textarea { width: 503px; height: 35px; border: 1px #728ea4 solid; }

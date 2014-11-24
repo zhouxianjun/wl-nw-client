@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+<link rel="stylesheet" href="css/comm.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery.mobile-1.3.2.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/loading.js"></script>
+<script src="js/addFriendV.js"></script>
+<style type="text/css">
+	body{
+		font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+		margin: 0;
+		padding: 0;
+		color: #333;
+	}
+	.header{
+		width: 100%;
+		height: 100%;
+	}
+	.top {
+		height: 55px;
+		margin-top: 0px;
+		-webkit-border-radius: 5px 5px 0 0;
+		border-top: 1px solid #9BA3AE;
+		background: url("images/bg3.png") repeat-x;
+	}
+	.head{
+		color: #393836;
+		margin: 5px 0 0 8px;
+		font-weight: bold;
+		font-size: 13px;
+		float: left;
+	}
+	.footbar{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		overflow: hidden;
+		zoom: 1;
+		background: #e0eff6;
+		border-top: 1px solid #cde5f1;
+		border-bottom-right-radius: 5px 5px;
+		border-bottom-left-radius: 5px 5px;
+	}
+	.btn{
+		float: right;
+		margin: 5px 5px 4px 0;
+		line-height: 20px;
+		width: 69px;
+		height: 22px;
+		background: url('images/sprite.png') 0 -702px no-repeat;
+		overflow: hidden;
+		text-align: center;
+		display: block;
+		-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+		color: #000;
+	}
+	.btn:hover{
+		background-position: 0 -660px;
+	}
+	.info{
+		float: left;
+		margin: 0 40px 0 10px;
+	}
+	.msg{
+		height: 200px;
+		background-color: white;
+	}
+	.ext{
+		color: gray;
+		margin-top: 10px;
+	}
+	#msgNickName{
+		color: #0072C1;
+	}
+	#vmsg{
+		border: 1px solid #A9DDE6;
+		height: 80px;
+		width: 280px;
+		margin-left: 150px;
+		margin-bottom: 8px;
+		padding: 5px;
+	}
+	input[name="isok"]{
+		vertical-align: middle;
+		margin: 0;
+		margin-right: 5px;
+	}
+	#nomsg{
+		border: 1px solid #ccc;
+		-webkit-border-radius: 3px;
+		height: 22px;
+		padding-left: 4px;
+		margin-left: 8px;
+	}
+	#nomsg:focus{
+		-webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+	}
+	#group{
+		width: 145px;
+		margin-bottom: 8px;
+		margin-left: 4px;
+		-webkit-border-radius: 3px;
+		border: 1px solid #ccc;
+		height: 24px;
+	}
+</style>
+</head>
+<body style="background-color: white;">
+	<div class="header">
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<div class="head">
+				添加好友
+			</div>
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="info">
+			<img id="infoImg" onerror="faceNofind();" src="" width="100px" height="100px" style="-webkit-border-radius: 5px;" />
+			<div id="infoNickName" class="ellipsis" style="width: 100px;text-align: center;margin: 0;padding: 0;font-weight: bold;"></div>
+			<div id="infoName" class="ellipsis" style="width: 100px;margin: 0;padding: 0;"></div>
+			<div class="ext">
+				<div>性别: <span id="sex"></span></div>
+				<div id="area" class="ellipsis" style="width: 100px;float: right;"></div>
+			</div>
+		</div>
+		<div class="msg">
+			<div><span id="msgNickName"></span>请求添加您为好友。</div>
+			<div id="vmsg"></div>
+			<div><input data-role="none" type="radio" name="isok" value="1" checked="checked"/>同意
+				<select data-role="none" id="group">
+					
+				</select></div>
+			<div><input data-role="none" type="radio" name="isok" value="2"/>拒绝<input data-role="none" type="text" id="nomsg" placeholder="拒绝理由"/></div>
+		</div>
+	</div>
+	<div class="footbar">
+		<a href="javascript:navite.closeWin();" data-role="none" class="btn" title="忽略">忽略</a>
+		<a href="javascript:ok();" data-role="none" class="btn" title="确定">确定</a>
+	</div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>修改个人资料</title>
+<link rel="stylesheet" href="css/comm.css" />
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/notifier-base.css" />
+<link rel="stylesheet" href="css/notifier-theme-clean.css" />
+<link rel="stylesheet" href="css/notifier-theme-plastic.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="js/underscore-1.3.3.min.js"></script>
+<script type="text/javascript" src="js/backbone-0.9.2.js"></script>
+<script type="text/javascript" src="js/backbone.notifier.js"></script>
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/threeSelect.js"></script>
+<script type="text/javascript" src="js/luanar.js"></script>
+<script type="text/javascript" src="js/nyr.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/editInfo.js"></script>
+</head>
+<body>
+<div class="window window_current" style="width: 562px; height: 375px; left: 600px; top: 100px; display: block; visibility: visible; z-index: 65;">
+    <div class="window_outer eqq_window window_has_controlArea" style="padding-right:3px; z-index: 62;height: 370px;">
+        <div class="window_inner" style="z-index: 65;">
+            <div class="window_bg_container"> </div>
+            <div style="position: absolute;right: 100px;width: 100%;height: 20px;-webkit-app-region: drag;-webkit-user-select: none;"></div>
+            <div class="window_content">
+                <div class="window_titleBar">
+                    <div class="window_titleButtonBar"><a class="ui_button window_action_button window_close" title="关闭" hidefocus="" href="javascript:navite.closeWin();" style="display: block;"></a></div>
+                    <div class="window_title titleText">我的资料</div>
+                </div>
+                <div class="window_bodyOuter" style="width: 540px; top: 25px;">
+                    <div class="window_toolBar"></div>
+                    <div class="app_toolbar_icon app_toolbar_toggle app_toolbar_toggle_up" style="display:none"></div>
+                    <div class="window_bodyArea" style="bottom: 29px; width: 560px;">
+                        <div class="userDetails_area">
+                            <div class="userDetails_MainInfo"> <img id="edit_face" onclick="openFaceFile();" class="userDetails_avatar" src="" style="cursor: pointer;">
+                                <div class="userDetails_nameArea">
+                                    <div class="userDetails_name">
+                                        <input id="edit_nickName" value="" required maxlength="7">
+                                    </div>
+                                    <div class="userDetails_account"></div>
+                                </div>
+                                <div class="userDetails_signatureArea" style="display: block;"><span title="">个性签名: </span>
+                                	<br><input id="edit_signature"/>
+                                </div>
+                            </div>
+                            <div class="userDetails_tabHeadArea">
+                                <div class="current" style="display: block;">基本资料</div>
+                            </div>
+                            <div class="userDetails_tabBodyArea">
+                                <div style="display: block;">
+                                    <div class="myDetails_basicList">
+                                        <dl class="userDetails_basicList">
+                                            <dt class="dItem_s">性别:</dt>
+                                            <dt class="dItem_s">生肖:</dt>
+                                            <dt class="dItem_s_r">星座:</dt>
+                                            <dt class="dItem_s_r">邮箱:</dt>
+                                            <dd class="dItem_s">
+                                                <select id="edit_sex">
+                                                	<option value="2">男</option> 
+												  	<option value="1">女</option> 
+                                                </select>
+                                            </dd>
+                                            <dd class="dItem_s">
+                                            	<input id="edit_zodiac" disabled="disabled"/>
+                                            </dd>
+                                            <dd class="dItem_s_r">
+                                                <input id="edit_constellation" disabled="disabled"/>
+                                            </dd>
+                                            <dd class="dItem_s_r">
+                                               <input id="edit_email" disabled="disabled"/>
+                                            </dd>
+                                            <dt class="dItem_l">生日:</dt>
+                                            <dt class="dItem_s_r">电话:</dt>
+                                            <dt class="dItem_s_r">手机:</dt>
+                                            <dd class="dItem_l">
+                                                <select id="edit_year" onchange="yearChange();" style="width: 108px;margin: 0 3px;"></select>
+                                                <div class="userDetails_text">年</div>
+                                                <select id="edit_month" onchange="startChange();" style="width: 45px;margin: 0 3px;"></select>
+                                                <div class="userDetails_text">月</div>
+                                                <select id="edit_day" onchange="startChange();" style="width: 45px;margin: 0 3px;"></select>
+                                                <div class="userDetails_text">日</div>
+                                            </dd>
+                                            <dd class="dItem_s_r">
+                                                <input value="" maxlength="20" id="edit_mobile">
+                                            </dd>
+                                            <dd class="dItem_s_r">
+                                                <input value="" maxlength="13" id="edit_tel">
+                                            </dd>
+                                            <dt class="dItem_l">个人说明:</dt>
+                                            <dd class="userDetails_superbig_my" style="height: 100px;">
+                                                <div id="edit_description" contenteditable="true" style="height: 90px; border: 1px solid;"></div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="window_controlArea" _olddisplay="" style="display: block;"> <a class="ui_button window_button window_cancel" title="" hidefocus="" href="javascript:navite.closeWin();" style="display: block;margin-right: 25px;">取消</a><a class="ui_button window_button window_ok" title="" hidefocus="" href="javascript:javascript:update();" style="display: block;">确定</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

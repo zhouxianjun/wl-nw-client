@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<title>消息盒子</title>
+<link rel="stylesheet" href="css/comm.css" />
+<link rel="stylesheet" href="css/ui.tabs.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/api.js"></script>
+<script src="js/iscroll.js"></script>
+<script src="js/wrapper.js"></script>
+<script src="js/ui.tabs.js"></script>
+<script src="js/msgbox.js"></script>
+<style type="text/css">
+	body{
+		font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+		margin: 0;
+		padding: 0;
+		color: #333;
+	}
+	.header{
+		width: 100%;
+		height: 100%;
+	}
+	.top {
+		height: 30px;
+		margin-top: 0px;
+		-webkit-border-radius: 5px 5px 0 0;
+		border-top: 1px solid #9BA3AE;
+		background: url("images/bg3.png") repeat-x;
+	}
+	.head{
+		color: #393836;
+		margin: 5px 0 0 8px;
+		font-weight: bold;
+		font-size: 13px;
+		float: left;
+	}
+	.footbar{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		overflow: hidden;
+		zoom: 1;
+		background: #e0eff6;
+		border-top: 1px solid #cde5f1;
+		border-bottom-right-radius: 5px 5px;
+		border-bottom-left-radius: 5px 5px;
+	}
+	.btn{
+		float: right;
+		margin: 5px 5px 4px 0;
+		line-height: 20px;
+		width: 69px;
+		height: 22px;
+		background: url('images/sprite.png') 0 -702px no-repeat;
+		overflow: hidden;
+		text-align: center;
+		display: block;
+		-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+		color: #000;
+	}
+	.btn:hover{
+		background-position: 0 -660px;
+	}
+	#request{
+		bottom:0; left:0;
+		width:100%;
+		overflow:auto;
+		padding-left: 0;
+		padding-right: 0;
+	}
+</style>
+</head>
+<body>
+	<div class="header">
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<div class="head">
+				消息盒子
+			</div>
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+		</div>
+	</div>
+	<div>
+		<ul id="unreads">
+			<li><a href="#request"><span>请求</span></a></li>
+			<li><a href="#chats"><span>未读会话</span></a></li>
+		</ul>
+		<div id="request">
+			<div class="scroller">
+				<div id="request_pullDown" class="pullDown">
+					<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+				</div>
+				<ul id="unmsg">
+					<!-- <p style="background-color: ghostwhite;">
+						<img id="unmsg-face" src="" width="44px" height="44px;" style="float: left;">
+						<span id="unmsg-date" style="float: right;color: #47778D;font-size: 12px;">ssss</span>
+						<span style="margin-left: 8px;color: #343434;" class="ellipsis"><span id="unmsg-nickName">715213471</span>(<span id="unmsg-name">715213471</span>) 请求添加您为好友.</span><br>
+						<span style="float: right;color: #47778D;font-size: 12px;">
+							<button>查看</button>
+							<button>忽略</button>
+						</span>
+						<span id="unmsg-msg" style="margin-left: 52px; color: #B6B6B6;display: block;" class="ellipsis">附加信息: 我是军仔</span>
+					</p> -->
+				</ul>
+			</div>
+		</div>
+		<div id="chats">
+	             
+		</div>
+	</div>
+	<div class="footbar">
+		<a href="javascript:navite.closeWin();" class="btn" title="关闭">关闭</a>
+		<a href="javascript:;" class="btn" title="查看全部">查看全部</a>
+		<a href="javascript:;" class="btn" title="忽略全部">忽略全部</a>
+	</div>
+</body>
+</html>

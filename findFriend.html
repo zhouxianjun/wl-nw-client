@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<title>微聊 - 查找好友</title>
+<link rel="stylesheet" href="css/jquery.mobile-1.3.2.min.css" />
+<link rel="stylesheet" href="css/comm.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery.mobile-1.3.2.min.js"></script>
+<script src="js/cpc.js"></script>
+<script src="js/threeSelect.js"></script>
+<script src="js/api.js"></script>
+<script src="js/findFriend.js"></script>
+<script src="js/loading.js"></script>
+<style type="text/css">
+	body{
+		font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+		margin: 0;
+		padding: 0;
+		color: #333;
+	}
+	.header{
+		width: 100%;
+		height: 100%;
+	}
+	.top {
+		height: 55px;
+		margin-top: 0px;
+		-webkit-border-radius: 5px 5px 0 0;
+		border-top: 1px solid #9BA3AE;
+		background: url("images/bg3.png") repeat-x;
+	}
+	.head{
+		color: #393836;
+		margin: 5px 0 0 8px;
+		font-weight: bold;
+		font-size: 13px;
+		float: left;
+	}
+	.findType{
+		margin-left: 20px;
+	}
+	.findHead{
+		margin-left: 20px;
+		line-height: 26px;
+	}
+	.findHead input{
+		vertical-align: middle;
+		width: 20px;
+		margin: 0;
+		margin-right: 4px;
+	}
+	.exactFind{
+		margin: 8px 0 0 40px;
+		line-height: 22px;
+	}
+	.mutilFind{
+		margin: 8px 0 0 40px;
+		line-height: 30px;
+	}
+	.exactFind input{
+		border: 1px solid #ccc;
+		-webkit-border-radius: 5px;
+		height: 22px;
+		padding-left: 4px;
+	}
+	.exactFind input:focus{
+		-webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+	}
+	.footbar{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		overflow: hidden;
+		zoom: 1;
+		background: #e0eff6;
+		border-top: 1px solid #cde5f1;
+		border-bottom-right-radius: 5px 5px;
+		border-bottom-left-radius: 5px 5px;
+	}
+	.btn{
+		float: right;
+		margin: 5px 5px 4px 0;
+		line-height: 20px;
+		width: 69px;
+		height: 22px;
+		background: url('images/sprite.png') 0 -702px no-repeat;
+		overflow: hidden;
+		text-align: center;
+		display: block;
+		-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+		color: #000;
+	}
+	.btn:hover{
+		background-position: 0 -660px;
+	}
+	#group{
+		width: 145px;
+		margin-bottom: 8px;
+		margin-left: 4px;
+		-webkit-border-radius: 3px;
+		border: 1px solid #ccc;
+		height: 24px;
+	}
+</style>
+</head>
+<body>
+	<div class="header">
+		<div class="top">
+			<div style="position: absolute;right: 70px;width: 100%;height: 20px;-webkit-user-select: none;-webkit-app-region: drag;"></div>
+			<div class="head">
+				查找好友
+			</div>
+			<div class="rightBtn">
+				<a id="main_close" class="window_action_button window_close"
+							title="关闭" href="javascript:navite.closeWin();"
+							style="display: block;"></a>
+				<a id="main_min" class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+			</div>
+		</div>
+	</div>
+	<div id="findParam">
+		<div class="findType">查找方式</div>
+		<div class="findHead">
+			<hr>
+			<div><input data-role="none" type="radio" name="findType" value="1" checked="checked"/>精确查找</div>
+			<div><input data-role="none" type="radio" name="findType" value="2"/>按条件查找</div>
+		</div>
+		<div class="exactFind">
+			<div><label>帐号:</label></div>
+			<div><input data-role="none" id="username" placeholder="请输入对方帐号" value=""/></div>
+			
+			<div><label>昵称:</label></div>
+			<div><input data-role="none" id="nickName" placeholder="请输入对方昵称" value=""/></div>
+		</div>
+		<div class="mutilFind" style="display: none">
+			<div>
+				<input data-role="none" id="mutil_nickName" placeholder="请输入对方昵称" value="" style="margin-right: 38px;"/>
+				<input data-role="none" type="checkbox" id="online" checked="checked" style="vertical-align: middle;"/>在线优先
+			</div>
+			<div style="float: left; margin-right: 30px;">
+				省份：
+				<select id="province" data-role="none" style="width: 120px;">
+				</select>
+			</div>
+			<div style="">
+				城市：
+				<select id="city" data-role="none" style="width: 120px;">
+				</select>
+			</div>
+			<div style="float: left; margin-right: 30px;">
+				区县：
+				<select id="district" data-role="none" style="width: 120px;">
+				</select>
+			</div>
+			<div style="">
+				性别：
+				<select id="sex" data-role="none" style="width: 120px;">
+					<option value="">性别</option>
+					<option value="2">男</option>
+					<option value="1">女</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div id="findResult" style="display: none;">
+		<div class="findType">查找结果</div>
+		<div data-role="content" class="findHead">
+			<ul style="height: 275px;overflow: auto;" data-role="listview" data-filter="true" data-filter-placeholder="Search fruits..." data-inset="true">
+			    <!-- <li>
+				    <a href="#">
+					    <div>
+					    	<img src="http://face5.web.qq.com/cgi/svr/face/getface?cache=0&type=11&fid=0&uin=1375099012" style="float: left;"/>
+					    	<div><span style="margin-left: 8px;color: #343434;" class="ellipsis">腾讯新闻(715213471)</span>
+					    		<div style="float: right; margin-right: 20px;">
+					    			<span style="margin: 0 5px;"><img src="images/search_detail_icon.png" style="vertical-align: middle;margin-right: 5px;"/>详细资料</span>
+					    			<span style="margin: 0 5px;"><img src="images/search_add_icon.png" style="vertical-align: middle;margin-right: 5px;"/>加为好友
+					    		</div>
+					    	</div>
+							<span style="margin-left: 50px; color: #343434;display: block;">性别: 男&nbsp;&nbsp;&nbsp;来自: 湖南岳阳</span>
+					    </div>
+				    </a>
+			    </li> -->
+			</ul>
+		</div>
+	</div>
+	<div class="footbar">
+		<a href="javascript:navite.closeWin();" data-role="none" class="btn" title="取消">取消</a>
+		<a href="javascript:pre();" id="preBtn" style="display: none;" data-role="none" class="btn" title="上一步">上一步</a>
+		<a href="javascript:find();" id="findBtn" data-role="none" class="btn" title="查询">查询</a>
+	</div>
+	<!-- <div data-role="popup" id="selectGroup" data-overlay-theme="a" data-theme="d" data-corners="false">
+		<div style="margin: 10px 5px 0 5px;">
+			请选择分组:
+	    	<select data-role="none" id="group" ></select>
+	    </div>
+		<div class="footbar" style="position: relative;">
+			<a href="javascript:addFriend();" id="findBtn" data-role="none" class="btn" title="确定">确定</a>
+		</div>
+	</div> -->
+</body>
+</html>

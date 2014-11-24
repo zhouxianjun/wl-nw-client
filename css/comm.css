@@ -1,0 +1,197 @@
+::-webkit-scrollbar {
+	width:10px;
+}
+::-webkit-scrollbar-thumb {
+	background-color:#C4C4C6;
+	border-radius:5px;
+	border:solid 1px #C4C4C6;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color:#6E6E6E;
+}
+body{
+	overflow: hidden;
+}
+input{
+	outline: none;
+}
+.rightBtn{
+	float: right;
+	margin-right: 2px;
+}
+.rightBtn span{
+	width: 30px;
+	height: 21px;
+	display: block;
+}
+.scroller {
+	position:relative;
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	float:left;
+	width:100%;
+	padding:0;
+}
+.scroller ul {
+	position:relative;
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+.scroller p {
+	margin: 0;
+	border-top: 1px solid #F7F7F7;
+	border-bottom: 1px solid #D5D6D7;
+	text-shadow: 0 1px 0 white;
+	cursor: pointer;
+	height: 45px;
+	background-color: #F5F5F5;
+	padding: 8px;
+}
+.pullDown, .pullUp {
+	height:40px;
+	line-height:40px;
+	font-weight:bold;
+	font-size:13px;
+	color:#888;
+	width: 150px;
+	margin: auto;
+}
+.pullDown .pullDownIcon, .pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(../images/pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+.pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+.pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+.pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+.pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+.pullDown.loading .pullDownIcon, .pullUp.loading .pullUpIcon{
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+.ellipsis{
+	white-space: nowrap;
+	padding: 2px 0px 0px;
+	overflow: hidden;
+	margin-top: 2px;
+	word-wrap: normal;
+	text-overflow: ellipsis;
+	font-size: 13px;
+}
+.ztree li{
+	overflow: hidden;
+}
+.bottomNav{
+	position:fixed; bottom:0; left:0; width:100%;
+ 	overflow:visible;
+}
+a:hover{
+	text-decoration: none;
+}
+a{
+	text-decoration: none;
+	font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+}
+.window_close {
+	background: url(../images/sprite.png) 0 -784px !important;
+	height: 20px;
+	float: right;
+	width: 39px;
+	margin: 0;
+}
+
+.window_close:HOVER {
+	background: url(../images/sprite.png) 0 -744px !important;
+}
+.window_min {
+	background: url(../images/sprite.png) 0 -944px !important;
+	height: 20px;
+	float: right;
+	width: 28px;
+	margin: 0;
+}
+
+.window_min:HOVER {
+	background: url(../images/sprite.png) 0 -904px !important;
+}
+.localImg{
+	max-width: calc(100%);
+}
+#fileDiv{
+	top: 83px;
+	position: absolute;
+	right: 0;
+	width: 275px;
+}
+#files_div{
+	overflow-y: auto;
+	height: 100%;
+}
+.update-main{	
+	background: -webkit-linear-gradient(#f9f9f9, #cecbc4);
+	color: #757575;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	text-align: center;
+	border-radius: 5px;
+	padding: 10px;
+}
+.update-wrapper {
+	width: 100%;
+}
+.update-wrapper p a {color:#757575; text-decoration:none;}
+.update-wrapper .update-load-bar {
+	width: 100%;
+	height: 25px;
+	border-radius: 30px;
+	background: #dcdbd7;
+	position: relative;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8),  inset 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+.update-wrapper .update-load-bar-inner {
+	height: 99%;
+	width: 0%;
+	border-radius: inherit;
+	position: relative;
+	background: #c2d7ac;
+	background: linear-gradient(#e0f6c8, #98ad84);
+	background: -moz-linear-gradient(#e0f6c8, #98ad84);
+	background: -webkit-linear-gradient(#e0f6c8, #98ad84);
+	background: -o-linear-gradient(#e0f6c8, #98ad84);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1),  0 1px 5px rgba(0, 0, 0, 0.3),  0 4px 5px rgba(0, 0, 0, 0.3);
+	animation: loader 10s linear infinite;
+	-moz-animation: loader 10s linear infinite;
+	-webkit-animation: loader 10s linear infinite;
+	-o-animation: loader 10s linear infinite;
+}
+.update-wrapper h1 {
+	font-size: 22px;
+	padding-top: 10px;
+}
+.update-wrapper p {
+	font-size: 13px;
+}

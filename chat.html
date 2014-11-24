@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="css/comm.css" />
+<link rel="stylesheet" href="css/loading2.css" />
+<link rel="stylesheet" href="css/notifier-base.css" />
+<link rel="stylesheet" href="css/notifier-theme-clean.css" />
+<link rel="stylesheet" href="css/notifier-theme-plastic.css" />
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/api.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+<script type="text/javascript" src="js/fileSHA1.js"></script>
+<script type="text/javascript" src="js/download.js"></script>
+<script type="text/javascript" src="js/ip.js"></script>
+<script type="text/javascript" src="js/underscore-1.3.3.min.js"></script>
+<script type="text/javascript" src="js/backbone-0.9.2.js"></script>
+<script type="text/javascript" src="js/backbone.notifier.js"></script>
+<script type="text/javascript" src="js/jquery.jrumble.1.3.min.js"></script>
+<script type="text/javascript" src="js/editFocus.js"></script>
+<script type="text/javascript" src="js/chat.js"></script>
+<style type="text/css">
+body{
+	font: 12px/1.5 tahoma,helvetica,clean,sans-serif;
+}
+.window_outer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	padding-right: 2px;
+	padding-bottom: 3px;
+}
+
+.window_inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.window_bg_container {
+	background: #f5fafc url('images/bg3.png') repeat-x;
+	border: 1px solid #3e7186;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 4px #333;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+.eqq_window .window_content {
+	margin: 1px;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	position: static;
+}
+
+.window_content {
+	height: 100%;
+	overflow: hidden;
+}
+
+.eqq_window .window_titleBar,.window_current .eqq_window .window_titleBar
+	{
+	margin: 5px;
+	background: transparent;
+}
+
+.eqq_window .window_titleButtonBar {
+	position: absolute;
+	right: 2px;
+	top: -1px;
+}
+
+.eqq_window .window_max {
+	background: url(images/sprite.png) 0 -864px !important;
+	height: 20px;
+	float: right;
+	width: 28px;
+	margin: 0;
+}
+
+.eqq_window .window_max:HOVER {
+	background: url(images/sprite.png) 0 -824px !important;
+}
+
+.eqq_window .window_restore {
+	background: url(images/sprite.png) 0 -1024px !important;
+	height: 20px;
+	float: right;
+	width: 28px;
+	margin: 0;
+}
+
+.eqq_window .window_restore:HOVER {
+	background: url(images/sprite.png) 0 -984px !important;
+}
+
+.eqq_window .window_title {
+	line-height: 15px;
+	text-align: left;
+}
+
+.titleText,a.titleText {
+	color: #6d6d6d;
+	font-weight: bold;
+}
+
+.avatarInChatbox {
+	display: block;
+	position: static;
+	float: left;
+	border: 1px solid #cacaca;
+	padding: 1px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	background: white;
+}
+
+.stateInChatbox {
+	display: block;
+	float: left;
+	margin: 22px 0 0 -12px;
+	width: 10px;
+	height: 10px;
+	overflow: hidden;
+	text-indent: -999em;
+}
+
+.typingInChatbox {
+	display: none;
+	float: left;
+	margin: 16px 0 0 -18px;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.chatBox_nameArea {
+	margin-left: 38px;
+	height: 16px;
+	overflow: hidden;
+	line-height: 16px;
+}
+
+.chatBox_allName {
+	display: block;
+	float: left;
+	height: 16px;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+	line-height: 16px;
+}
+
+.chatBox_moreInfoArea {
+	margin: 0 0 0 38px;
+	height: 18px;
+	overflow: hidden;
+	line-height: 18px;
+}
+
+.chatBox_buttonBar {
+	margin: 6px 0 0 0;
+}
+
+.chatBox_buttonBar a {
+	width: 36px;
+	height: 36px;
+	margin: 0 2px 0 0;
+	float: left;
+	list-style: none;
+	display: block;
+}
+
+.chatBox_buttonBar span {
+	display: block;
+	width: 28px;
+	height: 28px;
+	margin: 5px 4px 3px;
+}
+
+.chatBox_videoButton {
+	background: url('images/eqq_sprite_png.png') no-repeat 3px -380px;
+}
+
+.chatBox_sendFileButton {
+	float: left;
+	width: 28px;
+	height: 28px;
+	margin-top: 5px;
+	margin-left: 2px;
+	background: url('images/eqq_sprite_png.png') no-repeat -70px -380px;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_createDiscuButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -256px -378px;
+}
+.chatBox_outDiscuButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -218px -378px;
+}
+
+.eqq_window .window_bodyOuter {
+	border: 0 none;
+	background: transparent;
+}
+
+.window_bodyOuter {
+	border-top: 1px solid #ccc;
+	top: 25px;
+	bottom: 0;
+	width: 100%;
+	position: absolute;
+}
+
+.window_bodyArea {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	overflow: hidden;
+	background: transparent;
+}
+
+.chatBox_mainArea {
+	position: relative;
+	margin: 0;
+	height: 100%;
+	background: transparent;
+}
+
+.chatBox_chatBoard {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 143px;
+	width: calc(100% - 2px);
+	overflow: hidden;
+}
+
+.chatBox_msgList {
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: 0 auto;
+	width: 100%;
+	overflow: auto;
+}
+
+.chatBox_toolBar a:hover {
+	display: block;
+	border: #848f97 1px solid;
+	-moz-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 1px;
+}
+
+.chatBox_closeButton:hover {
+	background: url('images/sprite.png') 0 -660px no-repeat;
+}
+
+.chatBox_sendMsgButton:hover {
+	background: url('images/sprite.png') no-repeat 0 -492px;
+}
+
+.chatBox_sendOptionButton:hover {
+	background: url('images/sprite.png') no-repeat 0 -576px;
+}
+
+.eqq_window a {
+	color: #000;
+}
+
+.editorToolbar {
+	width: 100%;
+	padding: 5px 0 3px 0;
+	height: 24px;
+	display: none;
+	position: absolute;
+	bottom: 142px;
+	border-top: 1px solid #b7d3e7;
+	background: #e6f2fd;
+}
+
+.editorToolbar ul,.editorToolbar li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.editorToolbar select.fontFamily {
+	width: 130px;
+	border: 1px solid #6a9ed2;
+}
+
+.editorToolbar select.fontSize {
+	width: 50px;
+	border: 1px solid #6a9ed2;
+}
+
+.editorToolbar a.icon {
+	padding: 1px;
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	border: 1px solid #e6f2fd;
+	outline: 0;
+}
+
+.editorToolbar a.selected {
+	background-color: #9bc4ea;
+	border: 1px solid #7995b2;
+}
+
+.editorToolbar a.icon span {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+}
+
+.editorToolbar .bold {
+	background: url('images/eqq_sprite_png.png') no-repeat -2px -43px;
+}
+
+.editorToolbar .italic {
+	background: url('images/eqq_sprite_png.png') no-repeat -42px -43px;
+}
+
+.editorToolbar .underline {
+	background: url('images/eqq_sprite_png.png') no-repeat -22px -43px;
+}
+
+.editorToolbar .color {
+	background: url('images/eqq_sprite_png.png') no-repeat -63px -43px;
+}
+
+.editorToolbar .colorPanel {
+	width: 130px;
+	border-top: 1px solid #b2b2b2;
+	border-left: 1px solid #b2b2b2;
+	border-right: 1px solid #9bc4ea;
+	border-bottom: 1px solid #9bc4ea;
+	clear: left;
+	position: absolute;
+	padding: 5px;
+	background: #fff;
+	display: none;
+	left: 248px;
+	bottom: 22px;
+}
+
+.editorToolbar .colorPanel a {
+	display: inline-block;
+	padding: 1px;
+	border: 1px solid #fff;
+	font-size: 1px;
+	outline: 0;
+}
+
+.editorToolbar .colorPanel a span {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #a6a6a6;
+	font-size: 1px;
+	cursor: pointer;
+}
+
+.chatBox_toolBar {
+	position: absolute;
+	left: 0;
+	bottom: 115px;
+	margin: 0 auto;
+	width: calc(100% - 2px);
+	height: 25px;
+	overflow: hidden;
+	cursor: n-resize;
+	zoom: 1;
+	background: #d3e8f3;
+}
+
+.chatBox_toolBar a {
+	display: block;
+	height: 20px;
+	width: 20px;
+	margin: 0 2px;
+	border: #d3e8f3 1px solid;
+	float: left;
+}
+
+.chatBox_fontButton {
+	background: url('images/eqq_sprite_png.png') no-repeat 0 -60px;
+	width: 100%;
+	height: 100%;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_faceButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -20px -60px;
+	width: 100%;
+	height: 100%;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_shakeButton {
+	float: left;
+	width: 20px;
+	height: 20px;
+	background: url('images/eqq_sprite_png.png') no-repeat -140px -60px;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_snapButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -120px -60px;
+	width: 100%;
+	height: 100%;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_clearButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -80px -60px;
+	width: 100%;
+	height: 100%;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_acceptButton {
+	background: url('images/eqq_sprite_png.png') no-repeat -20px -20px;
+	width: 100%;
+	height: 100%;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_historyButtonCon {
+	float: right !important;
+	width: 90px !important;
+	margin: 0 5px !important;
+}
+
+.chatBox_buttonBar a:hover {
+	background: url('images/sprite.png') 0 -436px;
+}
+
+.chatBox_historyButton {
+	float: left;
+	width: 20px;
+	height: 20px;
+	background: url('images/eqq_sprite_png.png') no-repeat -100px -60px;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_historyButtontxt {
+	color: #000;
+	margin: 0 5px;
+	float: left;
+}
+
+.chatBox_Down {
+	background: url('images/eqq_sprite.gif') no-repeat 0 -22px;
+	float: left;
+	height: 6px;
+	margin: 7px 0 0;
+	width: 7px;
+	display: inline;
+}
+
+.chatBox_inputBox {
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 28px;
+	margin: 0 auto;
+	padding: 1px 0;
+	height: 85px;
+	width: 100%;
+	overflow: hidden;
+	font-size: 12px;
+}
+
+.rich_editor {
+	height: 100%;
+	margin-left: 3px;
+	font-family: 宋体;
+	font-size: 10pt;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	color: #000;
+}
+
+.rich_editor_div,.rich_editor_text {
+	display: block;
+	height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	border: 0;
+	outline: 0;
+	margin: 0;
+	padding: 0;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.chatBox_controlPanel {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: calc(100% - 2px);
+	overflow: hidden;
+	zoom: 1;
+	background: #e0eff6;
+	border-top: 1px solid #cde5f1;
+	border-bottom-right-radius: 5px 5px;
+	border-bottom-left-radius: 5px 5px;
+}
+
+.chatBox_speechButton {
+	height: 30px;
+	width: 22px;
+	outline: 0;
+	cursor: pointer;
+	color: transparent;
+	background: transparent;
+	float: left;
+	font-size: 16px;
+	border: 0 solid;
+	display: none;
+}
+
+.chatBox_sendOptionButton {
+	float: right;
+	margin: 5px 8px 4px 0;
+	width: 19px;
+	height: 22px;
+	line-height: 20px;
+	background: url('images/sprite.png') no-repeat 0 -618px;
+	overflow: hidden;
+	text-align: center;
+	display: block;
+	display: inline;
+}
+
+.chatBox_sendMsgButton {
+	float: right;
+	width: 64px;
+	height: 22px;
+	line-height: 20px;
+	margin: 5px 0 4px;
+	background: url('images/sprite.png') no-repeat 0 -534px;
+	overflow: hidden;
+	text-align: center;
+	display: block;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.chatBox_closeButton {
+	float: right;
+	margin: 5px 5px 4px 0;
+	line-height: 20px;
+	width: 69px;
+	height: 22px;
+	background: url('./images/sprite.png') 0 -702px no-repeat;
+	overflow: hidden;
+	text-align: center;
+	display: block;
+	-webkit-tap-highlight-color: rgba(6, 6, 6, 0.3);
+}
+
+.editorToolbar ul li {
+	float: left;
+	margin: 0 1px;
+}
+
+.editorToolbar a.icon:hover {
+	background-color: #9bc4ea;
+	border: 1px solid #7995b2;
+}
+
+.chatLogOptionPanel {
+	display: none;
+	position: absolute;
+	border: 1px solid #666;
+	width: 90px;
+	height: 48px;
+	overflow: hidden;
+	background: white;
+}
+
+a.simpleMenuItem {
+	display: block;
+	padding: 0 10px 0 5px;
+	height: 24px;
+	overflow: hidden;
+	color: black;
+	line-height: 24px;
+}
+
+.selectedIcon {
+	float: left;
+	margin: 4px 4px 4px 0;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.sendOptionPanel {
+	display: none;
+	position: absolute;
+	border: 1px solid #666;
+	width: 150px;
+	overflow: hidden;
+	background: white;
+}
+
+.simpleMenuItemSelected .selectedIcon {
+	background: url(images/eqq_sprite.gif) 5px -33px no-repeat;
+}
+
+a.simpleMenuItem:hover {
+	background: #d6e9f8;
+	cursor: default;
+}
+
+.facePanel {
+	display: none;
+	position: absolute;
+	bottom: 140px;
+	z-index: 2;
+	border: 1px solid #666;
+	width: 446px;
+	height: 244px;
+	overflow: hidden;
+	background: white;
+}
+
+.defaultFacePanel {
+	display: none;
+	margin: 5px;
+	width: 436px;
+	height: 204px;
+	overflow: hidden;
+	background: url(images/face.gif) no-repeat;
+}
+
+.defaultFacePanel a:hover {
+	display: block;
+	float: left;
+	border: 1px solid blue;
+	width: 27px;
+	height: 27px;
+	margin: 1px 0 0 1px;
+	overflow: hidden;
+	cursor: default;
+}
+
+.defaultFacePanel a {
+	display: block;
+	float: left;
+	width: 28px;
+	height: 28px;
+	margin: 1px 0 0 1px;
+	overflow: hidden;
+	cursor: default;
+}
+
+.tabArea {
+	padding: 0 0 0 5px;
+	height: 30px;
+	background: #d6e9f8;
+	overflow: hidden;
+	zoom: 1;
+}
+
+.tabArea a {
+	display: block;
+	float: left;
+	margin: 0 1px;
+	padding: 5px 10px;
+	height: 14px;
+	line-height: 16px;
+	overflow: hidden;
+	cursor: default;
+}
+
+.tabArea a.current {
+	background: white;
+}
+
+.chatBox_buddyMsg {
+	display: block;
+	margin: 0;
+	padding: 5px;
+}
+
+.chatBox_buddyMsg .msgHead {
+	color: #00f;
+}
+
+.icon_green {
+	padding: 0 5px;
+	background: url('images/eqq_sprite_png.png') no-repeat -44px -2px;
+}
+
+.chatBox_buddyMsg .defaultFontStyle,.chatBox_myMsg .defaultFontStyle {
+	font-family: 宋体;
+	font-size: 10pt;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+	color: #000;
+}
+
+.chatBox_myMsg {
+	display: block;
+	margin: 0;
+	padding: 5px;
+}
+
+.chatBox_myMsg .msgHead {
+	color: #008000;
+	overflow: hidden;
+	zoom: 1;
+}
+
+.msgFileBox {
+	color: #505050;
+	padding-left: 3px;
+	line-height: 20px;
+	vertical-align: middle;
+}
+
+.chatBox_myMsg .msgBody {
+	margin: 0 0 0 13px;
+	color: #000;
+	word-wrap: break-word;
+}
+
+.chatBox_buddyMsg .msgBody {
+	margin: 0 0 0 13px;
+	color: #000;
+	word-wrap: break-word;
+}
+
+.chatBox_buddyMsg .msgHead {
+	color: #00f;
+}
+</style>
+</head>
+<body>
+	<div id="window_outer_1" class="window_outer eqq_window">
+		<div id="window_inner_1" class="window_inner" style="z-index: 20;">
+			<div class="window_bg_container" id="window_bg_container_1"
+				style="background-image: url(http://0.web.qstatic.com/webqqpic/pubapps/0/50/images/bg.png); background-color: rgb(244, 249, 252); background-position: initial initial; background-repeat: repeat no-repeat;">
+			</div>
+			<div class="window_content">
+				<div id="window_titleBar_1" class="window_titleBar"
+					style="height: 83px;">
+					<div style="position: absolute;right: 100px;width: 100%;height: 20px;-webkit-app-region: drag;-webkit-user-select: none;"></div>
+					<div id="window_titleButtonBar_1" class="window_titleButtonBar">
+						<a id="ui_button_2" class="window_action_button window_close"
+							title="关闭" hidefocus="" href="javascript:navite.closeWin();"
+							style="display: block;"></a><a id="maxWinDom"
+							class="window_action_button window_max" title="最大化" hidefocus=""
+							href="javascript:navite.maximize();" style="display: block;"></a><a
+							id="restoreWinDom" class="window_action_button window_restore"
+							title="还原" hidefocus="" href="javascript:navite.restore();" _olddisplay=""
+							style="display: none;"></a><a id="ui_button_5"
+							class="window_action_button window_min" title="最小化" hidefocus=""
+							href="javascript:navite.minimize();" style="display: block;"></a>
+					</div>
+					<div id="window_title_1" class="window_title titleText"
+						style="height: 83px;">
+						<div class="chatBox_buddyAvatarArea onlineBuddyInChatbox"
+							uin="2761483074">
+							<img id="chatFace" class="avatarInChatbox" src="">
+							<div class="stateInChatbox"></div>
+							<div class="typingInChatbox">
+								<img title="typing"
+									src="http://0.web.qstatic.com/webqqpic/pubapps/0/50/images/typing.gif">
+							</div>
+						</div>
+						<div class="chatBox_nameArea">
+							<a class="chatBox_allName titleText" uin="2761483074" title="Gary "
+								href="javascript:;"> <span class="chatBox_mainName"
+								id="chatNickName">Gary</span>
+							</a>
+						</div>
+						<div class="chatBox_moreInfoArea">
+							<div class="chatBox_announcementArea">
+								<span id="chatSignature" title="个性签名">个性签名</span>
+							</div>
+						</div>
+						<div class="chatBox_buttonBar">
+							<a href="javascript:openRTC();" title="开始视频会话"><span class="chatBox_videoButton"></span></a> <a
+								href="javascript:sendFiles();"
+								class="chatBox_fileButton chatBox_menuButton" hidefocus="true">
+								<div class="chatBox_sendFileButton" title="发送文件..."></div>
+							</a> <a href="javascript:groupFirends();" title="创建讨论组"><span class="chatBox_createDiscuButton"></span></a>
+							<a id="outGroupChat" style="display: none;" href="javascript:outGroupChat();" title="退出讨论组"><span class="chatBox_outDiscuButton"></span></a>
+						</div>
+					</div>
+				</div>
+				<div id="window_body_outer_1" class="window_bodyOuter"
+					style="top: 83px;">
+					<div id="window_body_1" class="window_bodyArea">
+						<div class="chatBox_sideBar2"
+							_olddisplay="block" style="display: none;"></div>
+						<div class="chatBox_sideBar">
+						</div>
+						<div class="chatBox_mainArea">
+							<div class="chatBox_chatBoard"
+								style="bottom: 287px;">
+								<div class="chatBox_msgList autoscroll"
+									style="bottom: 0px;">
+								</div>
+							</div>
+							<div id="unReadPos" class="editorToolbar" onclick="toNewMsgPos();"></div>
+							<div id="editorToolbar" class="editorToolbar"
+								unselectable="on">
+								<ul class="toolbar" unselectable="on">
+									<li><select id="fontFamily" class="fontFamily" onchange="familyBtn(this.value);"><option
+												value="宋体">宋体</option>
+											<option value="黑体">黑体</option>
+											<option value="隶书">隶书</option>
+											<option value="微软雅黑">微软雅黑</option>
+											<option value="楷体_GB2312">楷体_GB2312</option>
+											<option value="幼圆">幼圆</option>
+											<option value="Arial">Arial</option>
+											<option value="Arial Black">Arial Black</option>
+											<option value="Times New Roman">Times New Roman</option>
+											<option value="Verdana">Verdana</option></select></li>
+									<li><select id="fontSize" class="fontSize" onchange="sizeBtn(this.value);"><option
+												value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option></select></li>
+									<li><a id="bold" onclick="boldBtn(this);" href="javascript:;" class="icon"
+										title="粗体"><span class="bold"></span></a></li>
+									<li><a id="italic" onclick="italicBtn(this);" href="javascript:;" class="icon"
+										title="斜体"><span class="italic"></span></a></li>
+									<li><a id="underline" onclick="underlineBtn(this);" href="javascript:;" class="icon"
+										title="下划线"><span class="underline"></span></a></li>
+									<li><a href="javascript:showSelectColor();" class="icon" title="颜色"><span
+											class="color"></span></a></li>
+								</ul>
+								<ul class="colorPanel" style="display: none;">
+									<li><a href="javascript:;"
+										onclick="selectedColor('#000000')"><span
+											style="background: #000000"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#993300')"><span
+											style="background: #993300"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#333300')"><span
+											style="background: #333300"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#003300')"><span
+											style="background: #003300"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#003366')"><span
+											style="background: #003366"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#000080')"><span
+											style="background: #000080"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#333399')"><span
+											style="background: #333399"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#333333')"><span
+											style="background: #333333"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#800000')"><span
+											style="background: #800000"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FF6600')"><span
+											style="background: #FF6600"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#808000')"><span
+											style="background: #808000"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#008000')"><span
+											style="background: #008000"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#008080')"><span
+											style="background: #008080"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#0000FF')"><span
+											style="background: #0000FF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#666699')"><span
+											style="background: #666699"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#808080')"><span
+											style="background: #808080"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FF0000')"><span
+											style="background: #FF0000"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FF9900')"><span
+											style="background: #FF9900"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#99CC00')"><span
+											style="background: #99CC00"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#339966')"><span
+											style="background: #339966"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#33CCCC')"><span
+											style="background: #33CCCC"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#3366FF')"><span
+											style="background: #3366FF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#800080')"><span
+											style="background: #800080"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#999999')"><span
+											style="background: #999999"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FF00FF')"><span
+											style="background: #FF00FF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FFCC00')"><span
+											style="background: #FFCC00"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FFFF00')"><span
+											style="background: #FFFF00"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#00FFFF')"><span
+											style="background: #00FFFF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#00FFFF')"><span
+											style="background: #00FFFF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#00CCFF')"><span
+											style="background: #00CCFF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#993366')"><span
+											style="background: #993366"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#C0C0C0')"><span
+											style="background: #C0C0C0"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FF99CC')"><span
+											style="background: #FF99CC"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FFCC99')"><span
+											style="background: #FFCC99"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FFFF99')"><span
+											style="background: #FFFF99"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#CCFFCC')"><span
+											style="background: #CCFFCC"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#CCFFFF')"><span
+											style="background: #CCFFFF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#99CCFF')"><span
+											style="background: #99CCFF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#CC99FF')"><span
+											style="background: #CC99FF"></span></a></li>
+									<li><a href="javascript:;"
+										onclick="selectedColor('#FFFFFF')"><span
+											style="background: #FFFFFF"></span></a></li>
+								</ul>
+							</div>
+							<div class="chatBox_toolBar">
+								<a href="javascript:showFontBtn();"><div
+										class="chatBox_fontButton" title="设置字体颜色和格式"></div></a> <a
+									href="javascript:;"><div class="chatBox_faceButton" title="表情"></div></a> <a
+									href="javascript:rumble();" id="chatRumbleButton"><div
+										class="chatBox_shakeButton" title="向好友发送窗口抖动"></div></a>
+								<a href="javascript:;"
+									style="display: block;"><div class="chatBox_snapButton"
+										title="截屏"></div></a> <a href="javascript:clear();"><div onclick="clear();" class="chatBox_clearButton"
+										title="清屏"></div></a> <a class="chatBox_historyButtonCon" title="消息记录"
+									href="javascript:;"><div class="chatBox_historyButton"></div>
+									<div class="chatBox_historyButtontxt">消息记录</div>
+									<div class="chatBox_Down"></div></a>
+							</div>
+							<div class="chatBox_inputBox">
+								<div id="chatMsgStyle" class="rich_editor"
+									style="font-family: 宋体; font-size: 8pt; font-weight: normal; font-style: normal; text-decoration: none; color: rgb(0, 0, 0);">
+									<div id="chatMsg" class="rich_editor_div autoscroll" contenteditable="true"
+										style="display: block;"><br/></div>
+									<textarea class="rich_editor_text" _olddisplay="block"
+										style="display: none;"></textarea>
+								</div>
+							</div>
+							<div class="chatBox_controlPanel">
+								<input class="chatBox_speechButton" title="语音输入" x-webkit-speech=""
+									style="display: block;"> <a href="javascript:;"
+									class="chatBox_sendOptionButton" title="修改发送快捷键"></a> <a
+									href="javascript:sendMsg();" class="chatBox_sendMsgButton" title="发送">发 送</a> <a
+									href="javascript:navite.closeWin();" class="chatBox_closeButton" title="关闭">关 闭</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="chatLogOptionPanel" class="chatLogOptionPanel"
+		style="z-index: 300055;">
+		<a id="viewChatLog" class="simpleMenuItem" href="javascript:;">查看历史消息</a>
+		<a id="exportCurrentChatLog" class="simpleMenuItem"
+			href="javascript:;">导出当前消息</a>
+	</div>
+	<div id="sendOptionPanel" class="sendOptionPanel" _olddisplay="block"
+		style="z-index: 300055;">
+		<a id="sendOption_enterKey" onclick="simpleMenuItemSelected(this);"
+			class="simpleMenuItem simpleMenuItemSelected" href="#"><div
+				class="selectedIcon"></div>按Enter键发送</a> <a id="sendOption_ctrlEnterKey"
+			class="simpleMenuItem" onclick="simpleMenuItemSelected(this);"
+			href="#"><div class="selectedIcon"></div>按Ctrl+Enter键发送</a>
+	</div>
+	<div id="EQQ_facePanel" class="facePanel" style="z-index: 300055;">
+		<div class="defaultFacePanel" style="display: block;">
+			<a class="faceIcon" facecode="[face0]" title="[face0]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face1]"
+				title="[face1]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face2]" title="[face2]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face3]" title="[face3]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face4]"
+				title="[face4]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face5]" title="[face5]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face6]" title="[face6]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face7]"
+				title="[face7]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face8]" title="[face8]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face9]" title="[face9]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face10]"
+				title="[face10]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face11]" title="[face11]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face12]" title="[face12]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face13]"
+				title="[face13]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face14]" title="[face14]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face15]" title="[face15]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face16]"
+				title="[face16]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face17]" title="[face17]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face18]" title="[face18]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face19]"
+				title="[face19]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face20]" title="[face20]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face21]" title="[face21]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face22]"
+				title="[face22]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face23]" title="[face23]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face24]" title="[face24]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face25]"
+				title="[face25]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face26]" title="[face26]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face27]" title="[face27]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face28]"
+				title="[face28]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face29]" title="[face29]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face30]" title="[face30]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face31]"
+				title="[face31]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face32]" title="[face32]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face33]" title="[face33]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face34]"
+				title="[face34]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face35]" title="[face35]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face36]" title="[face36]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face37]"
+				title="[face37]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face38]" title="[face38]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face39]" title="[face39]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face40]"
+				title="[face40]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face41]" title="[face41]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face42]" title="[face42]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face43]"
+				title="[face43]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face44]" title="[face44]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face45]" title="[face45]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face46]"
+				title="[face46]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face47]" title="[face47]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face48]" title="[face48]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face49]"
+				title="[face49]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face50]" title="[face50]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face51]" title="[face51]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face52]"
+				title="[face52]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face53]" title="[face53]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face54]" title="[face54]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face55]"
+				title="[face55]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face56]" title="[face56]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face57]" title="[face57]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face58]"
+				title="[face58]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face59]" title="[face59]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face60]" title="[face60]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face61]"
+				title="[face61]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face62]" title="[face62]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face63]" title="[face63]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face64]"
+				title="[face64]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face65]" title="[face65]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face66]" title="[face66]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face67]"
+				title="[face67]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face68]" title="[face68]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face69]" title="[face69]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face70]"
+				title="[face70]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face71]" title="[face71]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face72]" title="[face72]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face73]"
+				title="[face73]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face74]" title="[face74]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face75]" title="[face75]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face76]"
+				title="[face76]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face77]" title="[face77]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face78]" title="[face78]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face79]"
+				title="[face79]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face80]" title="[face80]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face81]" title="[face81]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face82]"
+				title="[face82]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face83]" title="[face83]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face84]" title="[face84]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face85]"
+				title="[face85]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face86]" title="[face86]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face87]" title="[face87]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face88]"
+				title="[face88]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face89]" title="[face89]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face90]" title="[face90]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face91]"
+				title="[face91]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face92]" title="[face92]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face93]" title="[face93]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face94]"
+				title="[face94]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face95]" title="[face95]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face96]" title="[face96]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face97]"
+				title="[face97]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face98]" title="[face98]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face99]" title="[face99]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face100]"
+				title="[face100]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face101]" title="[face101]" href="javascript:;"></a><a
+				class="faceIcon" facecode="[face102]" title="[face102]"
+				href="javascript:;"></a><a class="faceIcon" facecode="[face103]"
+				title="[face103]" href="javascript:;"></a><a class="faceIcon"
+				facecode="[face104]" title="[face104]" href="javascript:;"></a>
+		</div>
+		<div class="tabArea">
+			<a id="defaultFaceTab" class="defaultFaceTab current"
+				href="javascript:;" style="display: block;">默认</a>
+		</div>
+	</div>
+	<div id="showDisplayHisMsg" align="center" style="padding-top:10px;display: none;"><a href="javascript:void(0)" style="text-decoration:none; color:#008bea; line-height:30px;" onclick="displayHisMsg()"><img style="border:none; vertical-align:middle;" src="images/time.gif"/>&nbsp;查看更多消息</a><br></div>
+</body>
+</html>
